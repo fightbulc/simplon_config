@@ -4,12 +4,13 @@
 
   class Config
   {
-    private $_configPath;
+    /** @var string */
+    private static $_configPath;
 
     /**
      * @var array
      */
-    protected $_config = array();
+    private static $_config = array();
 
     // ########################################
 
@@ -17,11 +18,9 @@
      * @param $path
      * @return Config
      */
-    public function setConfigPath($path)
+    public static function setConfigPath($path)
     {
-      $this->_configPath = $path;
-
-      return $this;
+      Config::$_configPath = $path;
     }
 
     // ########################################
@@ -29,9 +28,9 @@
     /**
      * @return mixed
      */
-    public function getConfigPath()
+    public static function getConfigPath()
     {
-      return $this->_configPath;
+      return Config::$_configPath;
     }
 
     // ########################################
@@ -39,13 +38,13 @@
     /**
      * @return array
      */
-    public function getConfig()
+    public static function getConfig()
     {
-      if(! $this->_config)
+      if(! Config::$_config)
       {
         $app = array();
 
-        require $this->getConfigPath();
+        require Config::getConfigPath();
 
         /**
          * get current environment
@@ -60,10 +59,10 @@
         /**
          * only enabled environment
          */
-        $this->_config = $app[$env];
+        Config::$_config = $app[$env];
       }
 
-      return $this->_config;
+      return Config::$_config;
     }
 
     // ########################################
@@ -73,9 +72,9 @@
      * @return mixed
      * @throws \Exception
      */
-    public function getConfigByKeys(array $keys)
+    public static function getConfigByKeys(array $keys)
     {
-      $config = $this->getConfig();
+      $config = Config::getConfig();
 
       foreach($keys as $key)
       {
