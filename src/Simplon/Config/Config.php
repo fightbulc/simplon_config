@@ -38,7 +38,7 @@
     {
       $this->getInstance()->_configPath = $path;
 
-      return Config::
+      return $this;
     }
 
     // ########################################
