@@ -13,14 +13,22 @@
 
     // ########################################
 
+    /**
+     * @param $path
+     * @return Config
+     */
     public function setConfigPath($path)
     {
       $this->_configPath = $path;
+
       return $this;
     }
 
     // ########################################
 
+    /**
+     * @return mixed
+     */
     public function getConfigPath()
     {
       return $this->_configPath;
@@ -28,6 +36,9 @@
 
     // ########################################
 
+    /**
+     * @return array
+     */
     public function getConfig()
     {
       if(! $this->_config)
