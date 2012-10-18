@@ -4,13 +4,29 @@
 
   class Config
   {
+    /** @var Config */
+    private static $_instance;
+
     /** @var string */
-    private static $_configPath;
+    private $_configPath;
+
+    /** @var array */
+    private $_config = array();
+
+    // ########################################
 
     /**
-     * @var array
+     * @return Config
      */
-    private static $_config = array();
+    public static function getInstance()
+    {
+      if(! isset(Config::$_instance))
+      {
+        Config::$_instance = new Config();
+      }
+
+      return Config::$_instance;
+    }
 
     // ########################################
 
@@ -18,9 +34,11 @@
      * @param $path
      * @return Config
      */
-    public static function setConfigPath($path)
+    public function setConfigPath($path)
     {
-      Config::$_configPath = $path;
+      $this->getInstance()->_configPath = $path;
+
+      return Config::
     }
 
     // ########################################
@@ -29,11 +47,11 @@
      * @return string
      * @throws \Exception
      */
-    public static function getConfigPath()
+    public function getConfigPath()
     {
-      $filePath = Config::$_configPath;
+      $filePath = $this->getInstance()->_configPath;
 
-      if(!file_exists($filePath))
+      if(! file_exists($filePath))
       {
         throw new \Exception('Simplon/Config: Config file at "' . $filePath . '" doesnt exist.');
       }
@@ -46,13 +64,15 @@
     /**
      * @return array
      */
-    public static function getConfig()
+    public function getConfig()
     {
-      if(! Config::$_config)
+      if(! $this->getInstance()->_config)
       {
         $app = array();
 
-        require Config::getConfigPath();
+        require $this
+          ->getInstance()
+          ->getConfigPath();
 
         /**
          * get current environment
@@ -67,10 +87,10 @@
         /**
          * only enabled environment
          */
-        Config::$_config = $app[$env];
+        $this->getInstance()->_config = $app[$env];
       }
 
-      return Config::$_config;
+      return $this->getInstance()->_config;
     }
 
     // ########################################
@@ -80,9 +100,11 @@
      * @return mixed
      * @throws \Exception
      */
-    public static function getConfigByKeys(array $keys)
+    public function getConfigByKeys(array $keys)
     {
-      $config = Config::getConfig();
+      $config = $this
+        ->getInstance()
+        ->getConfig();
 
       foreach($keys as $key)
       {
