@@ -1,0 +1,28 @@
+{
+    "name": "simplon/config",
+    "description": "Multi Environment PHP-Config Reader",
+    "homepage": "https://github.com/fightbulc/simplon_config",
+    "version": "0.5.0",
+    "type": "library",
+    "keywords": ["config"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tino Ehrich",
+            "email": "opensource@efides.com",
+            "role": "developer"
+        }
+    ],
+
+    "minimum-stability": "dev",
+
+    "require": {
+        "php": ">=5.3.3"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "Simplon\\Config\\": "src/"
+        }
+    }
+}
