@@ -97,7 +97,7 @@
 
     /**
      * @param array $keys
-     * @return mixed
+     * @return array
      * @throws \Exception
      */
     public function getConfigByKeys(array $keys)
