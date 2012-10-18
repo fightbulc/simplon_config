@@ -26,11 +26,19 @@
     // ########################################
 
     /**
-     * @return mixed
+     * @return string
+     * @throws \Exception
      */
     public static function getConfigPath()
     {
-      return Config::$_configPath;
+      $filePath = Config::$_configPath;
+
+      if(!file_exists($filePath))
+      {
+        throw new \Exception('Simplon/Config: Config file at "' . $filePath . '" doesnt exist.');
+      }
+
+      return $filePath;
     }
 
     // ########################################
@@ -84,7 +92,7 @@
         }
         else
         {
-          throw new \Exception('Config key "' . implode('->', $keys) . '" doesnt exist.');
+          throw new \Exception('Simplon/Config: Config key "' . implode('->', $keys) . '" doesnt exist.');
         }
       }
 
