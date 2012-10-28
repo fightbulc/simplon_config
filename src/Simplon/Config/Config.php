@@ -80,7 +80,12 @@
         $env = $app['environment'];
 
         /**
-         * insert appName in environment
+         * include environment name again
+         */
+        $app[$env]['environment'] = $env;
+
+        /**
+         * insert appName too
          */
         $app[$env]['appName'] = $app['appName'];
 
