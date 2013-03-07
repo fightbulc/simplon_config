@@ -16,16 +16,16 @@
     // ########################################
 
     /**
-     * @return Config
+     * @return static
      */
-    public static function getInstance()
+    final public static function getInstance()
     {
-      if(! isset(Config::$_instance))
+      if(! static::$_instance)
       {
-        Config::$_instance = new Config();
+        static::$_instance = new static();
       }
 
-      return Config::$_instance;
+      return static::$_instance;
     }
 
     // ########################################
@@ -36,7 +36,7 @@
      */
     public function setConfigPath($path)
     {
-      $this->getInstance()->_configPath = $path;
+      $this->_configPath = $path;
 
       return $this;
     }
@@ -49,7 +49,7 @@
      */
     public function getConfigPath()
     {
-      $filePath = $this->getInstance()->_configPath;
+      $filePath = $this->_configPath;
 
       if(! file_exists($filePath))
       {
@@ -66,36 +66,26 @@
      */
     public function getConfig()
     {
-      if(! $this->getInstance()->_config)
+      if(! $this->_config)
       {
         $app = array();
 
-        require $this
-          ->getInstance()
-          ->getConfigPath();
+        require $this->getConfigPath();
 
-        /**
-         * get current environment
-         */
+        // get current environment
         $env = $app['environment'];
 
-        /**
-         * include environment name again
-         */
+        // pull through appName and environment
         $app[$env]['environment'] = $env;
-
-        /**
-         * insert appName too
-         */
         $app[$env]['appName'] = $app['appName'];
 
         /**
          * only enabled environment
          */
-        $this->getInstance()->_config = $app[$env];
+        $this->_config = $app[$env];
       }
 
-      return $this->getInstance()->_config;
+      return $this->_config;
     }
 
     // ########################################
@@ -107,20 +97,16 @@
      */
     public function getConfigByKeys(array $keys)
     {
-      $config = $this
-        ->getInstance()
-        ->getConfig();
+      $config = $this->getConfig();
 
       foreach($keys as $key)
       {
-        if(array_key_exists($key, $config))
-        {
-          $config = $config[$key];
-        }
-        else
+        if(! isset($config[$key]))
         {
           throw new \Exception('Simplon/Config: Config key "' . implode('->', $keys) . '" doesnt exist.');
         }
+
+        $config = $config[$key];
       }
 
       return $config;
