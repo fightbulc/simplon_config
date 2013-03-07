@@ -2,7 +2,7 @@
     "name": "simplon/config",
     "description": "Multi Environment PHP-Config Reader",
     "homepage": "https://github.com/fightbulc/simplon_config",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "type": "library",
     "keywords": ["config"],
     "license": "MIT",
