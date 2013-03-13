@@ -11,7 +11,7 @@
     private $_configPath;
 
     /** @var array */
-    private $_config = array();
+    private $_config = [];
 
     // ########################################
 
@@ -32,7 +32,7 @@
 
     /**
      * @param $path
-     * @return Config
+     * @return $this
      */
     public function setConfigPath($path)
     {
@@ -68,7 +68,7 @@
     {
       if(! $this->_config)
       {
-        $app = array();
+        $app = [];
 
         require $this->getConfigPath();
 

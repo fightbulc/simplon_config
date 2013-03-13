@@ -1,28 +1,28 @@
 {
-    "name": "simplon/config",
-    "description": "Multi Environment PHP-Config Reader",
-    "homepage": "https://github.com/fightbulc/simplon_config",
-    "version": "0.5.1",
-    "type": "library",
-    "keywords": ["config"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Tino Ehrich",
-            "email": "opensource@efides.com",
-            "role": "developer"
-        }
-    ],
-
-    "minimum-stability": "dev",
-
-    "require": {
-        "php": ">=5.3.3"
-    },
-
-    "autoload": {
-        "psr-0": {
-            "Simplon\\Config\\": "src/"
-        }
+  "name": "simplon/config",
+  "description": "Multi Environment PHP-Config Reader",
+  "homepage": "https://github.com/fightbulc/simplon_config",
+  "version": "0.5.2",
+  "type": "library",
+  "keywords": ["config"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tino Ehrich",
+      "email": "opensource@efides.com",
+      "role": "developer"
     }
+  ],
+
+  "minimum-stability": "dev",
+
+  "require": {
+    "php": ">=5.4"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "Simplon\\Config": "src/"
+    }
+  }
 }
