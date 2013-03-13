@@ -24,18 +24,18 @@ $app = [
 
 $app['local'] = [
   'url'      => [
-    'domain'   => 'http://local.jag.store.stage-service',
-    'frontend' => 'http://local.jag.store.stage-web',
+    'domain'   => '[URL_DOMAIN]',
+    'frontend' => '[URL_FRONTEND]',
     'public'   => '',
   ],
   'path'     => [
-    'games' => __DIR__ . '/../games',
+    'games' => __DIR__ . '/../some/path',
   ],
   'database' => [
     'mysql' => [
       [
         'server'   => 'localhost',
-        'database' => 'jag_store_stage',
+        'database' => 'some_db',
         'username' => 'rootuser',
         'password' => 'rootuser'
       ]
@@ -69,8 +69,8 @@ To safe resources we access the config class via singleton pattern ```Config::ge
 
 ```php
 [
-  'domain'   => 'http://local.jag.store.stage-service',
-  'frontend' => 'http://local.jag.store.stage-web',
+  'domain'   => '[URL_DOMAIN]',
+  'frontend' => '[URL_FRONTEND]',
   'public'   => '',
 ];
 ```
@@ -86,5 +86,5 @@ $urlDomain = Config::getInstance()
 ->setConfigPath($configPath)
 ->getConfigByKeys(['url', 'domain']);
 
-echo $urlDomain; // prints "http://local.jag.store.stage-service"
+echo $urlDomain; // prints "[URL_DOMAIN]"
 ```
