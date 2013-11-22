@@ -1,114 +1,104 @@
 <?php
 
-  namespace Simplon\Config;
+    namespace Simplon\Config;
 
-  class Config
-  {
-    /** @var Config */
-    private static $_instance;
-
-    /** @var string */
-    private $_configPath;
-
-    /** @var array */
-    private $_config = [];
-
-    // ########################################
-
-    /**
-     * @return static
-     */
-    final public static function getInstance()
+    class Config
     {
-      if(! static::$_instance)
-      {
-        static::$_instance = new static();
-      }
+        /** @var Config */
+        private static $_instance;
 
-      return static::$_instance;
-    }
+        /** @var string */
+        private $_configPath;
 
-    // ########################################
+        /** @var array */
+        private $_config = [];
 
-    /**
-     * @param $path
-     * @return $this
-     */
-    public function setConfigPath($path)
-    {
-      $this->_configPath = $path;
-
-      return $this;
-    }
-
-    // ########################################
-
-    /**
-     * @return string
-     * @throws \Exception
-     */
-    public function getConfigPath()
-    {
-      $filePath = $this->_configPath;
-
-      if(! file_exists($filePath))
-      {
-        throw new \Exception('Simplon/Config: Config file at "' . $filePath . '" doesnt exist.');
-      }
-
-      return $filePath;
-    }
-
-    // ########################################
-
-    /**
-     * @return array
-     */
-    public function getConfig()
-    {
-      if(! $this->_config)
-      {
-        $app = [];
-
-        require $this->getConfigPath();
-
-        // get current environment
-        $env = $app['environment'];
-
-        // pull through appName and environment
-        $app[$env]['environment'] = $env;
-        $app[$env]['appName'] = $app['appName'];
+        // ########################################
 
         /**
-         * only enabled environment
+         * @return static
          */
-        $this->_config = $app[$env];
-      }
-
-      return $this->_config;
-    }
-
-    // ########################################
-
-    /**
-     * @param array $keys
-     * @return array
-     * @throws \Exception
-     */
-    public function getConfigByKeys(array $keys)
-    {
-      $config = $this->getConfig();
-
-      foreach($keys as $key)
-      {
-        if(! isset($config[$key]))
+        final public static function getInstance()
         {
-          throw new \Exception('Simplon/Config: Config key "' . implode('->', $keys) . '" doesnt exist.');
+            if (!static::$_instance)
+            {
+                static::$_instance = new static();
+            }
+
+            return static::$_instance;
         }
 
-        $config = $config[$key];
-      }
+        // ########################################
 
-      return $config;
+        /**
+         * @param $path
+         *
+         * @return $this
+         */
+        public function setConfigPath($path)
+        {
+            $this->_configPath = $path;
+
+            return $this;
+        }
+
+        // ########################################
+
+        /**
+         * @return string
+         * @throws \Exception
+         */
+        public function getConfigPath()
+        {
+            if (!file_exists($this->_configPath))
+            {
+                throw new \Exception('Simplon/Config: Config file at "' . $this->_configPath . '" doesnt exist.');
+            }
+
+            return $this->_configPath;
+        }
+
+        // ########################################
+
+        /**
+         * @return array
+         */
+        public function getConfig()
+        {
+            if (!$this->_config)
+            {
+                $app = [];
+
+                require $this->getConfigPath();
+
+                $this->_config = $app;
+            }
+
+            return $this->_config;
+        }
+
+        // ########################################
+
+        /**
+         * @param array $keys
+         *
+         * @return array
+         * @throws \Exception
+         */
+        public function getConfigByKeys(array $keys)
+        {
+            $config = $this->getConfig();
+
+            foreach ($keys as $key)
+            {
+                if (!isset($config[$key]))
+                {
+                    throw new \Exception('Simplon/Config: Config key "' . implode('->', $keys) . '" doesnt exist.');
+                }
+
+                $config = $config[$key];
+            }
+
+            return $config;
+        }
     }
-  }

@@ -15,25 +15,14 @@ Its a simple config file reader which handles namespaced config arrays.
 
 ```php
 $app = [
-  'appName'     => 'service.store',
-  'environment' => 'local',
-];
-
-// ##########################################
-// environment: local
-
-$app['local'] = [
   'url'      => [
-    'domain'   => '[URL_DOMAIN]',
+    'service'  => '[URL_SERVICE]',
     'frontend' => '[URL_FRONTEND]',
-    'public'   => '',
   ],
-  'path'     => [
-    'games' => __DIR__ . '/../some/path',
-  ],
+
   'database' => [
     'mysql' => [
-      [
+      'localhost' => [
         'server'   => 'localhost',
         'database' => 'some_db',
         'username' => 'rootuser',
@@ -45,23 +34,8 @@ $app['local'] = [
     'host' => 'localhost',
     'port' => 25,
   ],
-  'vars'     => [
-    'allowedSessionMinutes' => 0,
-  ],
 ];
-
-// ##########################################
-// environment: stage
-
-$app['stage'] = [];
-
-// ##########################################
-// environment: production
-
-$app['production'] = [];
 ```
-
-This type of config file enables us to maintain one file for as many different environments as the application requires. The active environment is enabled via the array entry ```$app['environment'] = 'XXX'```.
 
 ## Get data from your config file
 
@@ -69,22 +43,21 @@ To safe resources we access the config class via singleton pattern ```Config::ge
 
 ```php
 [
-  'domain'   => '[URL_DOMAIN]',
+  'service'  => '[URL_SERVICE]',
   'frontend' => '[URL_FRONTEND]',
-  'public'   => '',
 ];
 ```
 
-Multiple array elements will be chained together. According to that the following example will only return the string value for ```['url']['domain']```:
+Multiple array elements will be chained together. According to that the following example will only return the string value for ```['url']['service']```:
 
 ```php
 use Simplon\Config\Config;
 
 $configPath = __DIR__ . '/../../config/common.config.php';
 
-$urlDomain = Config::getInstance()
+$urlService = Config::getInstance()
 ->setConfigPath($configPath)
-->getConfigByKeys(['url', 'domain']);
+->getConfigByKeys(['url', 'service']);
 
-echo $urlDomain; // prints "[URL_DOMAIN]"
+echo $urlService; // prints "[URL_SERVICE]"
 ```
